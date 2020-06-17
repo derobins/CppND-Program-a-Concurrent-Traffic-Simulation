@@ -63,7 +63,8 @@ void TrafficLight::cycleThroughPhases()
 
     while (true) {
 
-        long delta = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count();
+        auto now = std::chrono::system_clock::now(); 
+        long delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
 
         if (delta > interval) {
 
