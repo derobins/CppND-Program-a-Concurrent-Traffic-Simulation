@@ -17,6 +17,13 @@ void MessageQueue<T>::send(T &&msg)
 {
     // FP.4a : The method send should use the mechanisms std::lock_guard<std::mutex> 
     // as well as _condition.notify_one() to add a new message to the queue and afterwards send a notification.
+
+    // Acquire the mutex (will be released when we go out of scope)
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    // Push the message into the queue and notify waiters
+    _queue.emplace_back(std::move(msg));
+    _condition.notify_one();
 }
 
 /* Implementation of class "TrafficLight" */
