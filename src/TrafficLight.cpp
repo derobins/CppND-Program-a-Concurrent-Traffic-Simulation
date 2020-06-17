@@ -74,7 +74,8 @@ void TrafficLight::cycleThroughPhases()
             else
                 _currentPhase = red;
 
-            // TODO: Send message here
+            // Send the current phase to the message queue
+            _messageQueue.send(std::move(_currentPhase));
 
             // Reset start and duration
             start = std::chrono::system_clock::now();
